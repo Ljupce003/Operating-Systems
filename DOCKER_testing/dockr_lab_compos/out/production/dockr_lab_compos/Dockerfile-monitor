@@ -1,0 +1,7 @@
+FROM eclipse-temurin
+COPY TemperatureMonitor.java /usr/src/myapp/
+
+WORKDIR /usr/src/myapp
+
+RUN javac TemperatureMonitor.java
+CMD ["java", "TemperatureMonitor"]

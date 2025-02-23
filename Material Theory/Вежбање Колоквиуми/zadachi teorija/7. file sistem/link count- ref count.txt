@@ -1,0 +1,5 @@
+link count - se zgolemuva pri prvo otvoranje na dat
+default 1
+Se zgolemuva so hard links 
+
+ref count - broi pristapi

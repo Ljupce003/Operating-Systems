@@ -1,0 +1,13 @@
+services:
+  nginx:
+    image: nginx
+#    deploy:
+#      replicas: 5
+
+  ubuntu:
+    image: ubuntu
+    command: ["bash","-c","apt-get update && apt-get install -y curl && while true; do curl -s -o /dev/null http://nginx; sleep 1; done"]
+#    deploy:
+#      replicas: 1
+    depends_on:
+      - nginx

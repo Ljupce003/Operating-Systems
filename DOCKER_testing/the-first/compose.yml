@@ -1,0 +1,3 @@
+services:
+  Fir-c:
+    image: the-firs

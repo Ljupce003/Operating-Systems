@@ -1,0 +1,52 @@
+#services:
+#  front:
+#    container_name: Html-container
+#    image: nginx
+#    volumes:
+#      - ./frontend/:/usr/share/nginx/html
+#    ports:
+#      - 1000:80
+#  backend:
+#    container_name: Java-Container
+#    build:
+#      context: ./backend
+#      dockerfile: Dockerfile
+#    ports:
+#      - 1001:8080
+
+services:
+  frontend:
+    container_name: Html-Container
+    image: nginx
+    ports:
+      - 1001:80
+    volumes:
+      - frontend-code:/usr/share/nginx/html
+
+    networks:
+      - front_backend-network
+
+    environment:
+      - NGINX_PORT=80
+      - NGINX_HOST=frontend.example.com
+
+  backend:
+    container_name: Java-Container
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - backend-code:/app
+    networks:
+      - front_backend-network
+
+    environment:
+      - API_KEY=my_key
+
+volumes:
+  frontend-code:
+  backend-code:
+
+networks:
+  front_backend-network:
+    driver: bridge

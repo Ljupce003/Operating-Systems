@@ -1,0 +1,17 @@
+services:
+  front:
+    container_name: Html-container
+    image: nginx
+    volumes:
+      - ./frontend/:/usr/share/nginx/html
+    ports:
+      - 1000:80
+  backend:
+    container_name: Java-Container
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 1001:8080
+
+

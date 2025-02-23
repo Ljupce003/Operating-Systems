@@ -1,0 +1,6 @@
+services:
+  html_container:
+    image: testing
+    container_name: Pero_Cvrc
+    ports:
+      - 1000:80

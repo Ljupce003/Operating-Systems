@@ -1,0 +1,63 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    container_name: server
+    environment:
+      - COUNTER_FILE=data/counter.bin
+      - SERVER_PORT=2500
+    volumes:
+      - ./src/data:/usr/src/myapp/data
+    networks:
+      - private-client-server-net
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    environment:
+      - SERVER_PORT=2500
+      - SERVER_NAME=server
+    networks:
+      - private-client-server-net
+
+    deploy:
+      replicas: 5
+
+    depends_on:
+      - server
+
+  udp_server:
+    build:
+      context: .
+      dockerfile: Dockerfile-UDP_server
+
+    container_name: udp_server
+
+    networks:
+      - private-UDP-client-server-net
+
+    environment:
+      - UDP_SERVER_PORT=2400
+
+  udp_client:
+    build:
+      context: .
+      dockerfile: Dockerfile-UDP_client
+    networks:
+      - private-UDP-client-server-net
+    environment:
+      - UDP_SERVER_NAME=udp_server
+      - UDP_SERVER_PORT=2400
+    depends_on:
+      - udp_server
+    deploy:
+      replicas: 5
+
+
+networks:
+  private-client-server-net:
+    driver: bridge
+  private-UDP-client-server-net:
+    driver: bridge

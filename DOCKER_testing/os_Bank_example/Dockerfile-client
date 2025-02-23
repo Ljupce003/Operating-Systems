@@ -1,0 +1,5 @@
+FROM eclipse-temurin
+WORKDIR /usr/src/myapp
+COPY src/Client.java .
+RUN javac Client.java
+CMD ["java","Client"]

@@ -1,0 +1,40 @@
+services:
+  sensor:
+    build:
+      context: .
+      dockerfile: Dockerfile-sensor
+    container_name: temp_sensor
+
+    volumes:
+      - temperature:/usr/src/myapp/temperature
+
+    networks:
+      temperature-level-network:
+
+  monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile-monitor
+    container_name: temp_monitor
+    depends_on:
+      - sensor
+    volumes:
+      - temperature:/usr/src/myapp/temperature
+      - avgtemperature:/usr/src/myapp/avgtemperature
+
+    environment:
+      LOW_TEMPERATURE: 3
+      MEDIUM_TEMPERATURE: 20
+      HIGH_TEMPERATURE: 38
+
+    networks:
+      temperature-level-network:
+
+
+volumes:
+  temperature:
+  avgtemperature:
+
+networks:
+  temperature-level-network:
+    driver: bridge

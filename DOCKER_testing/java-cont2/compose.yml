@@ -1,0 +1,15 @@
+services:
+  Java:
+    image: java-v-i
+    container_name: Java-Counter
+    volumes:
+      - /data:/usr/src/myapp/data/
+    ports:
+      - 1005:80
+
+  Web:
+    image: htm
+    container_name: Web-html
+    ports:
+      - 1001:80
+

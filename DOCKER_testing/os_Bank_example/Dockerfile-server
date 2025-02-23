@@ -1,0 +1,5 @@
+FROM eclipse-temurin
+COPY src/bank /usr/src/myapp/bank
+WORKDIR /usr/src/myapp
+RUN javac bank/*.java
+CMD ["java","bank.BankServer"]

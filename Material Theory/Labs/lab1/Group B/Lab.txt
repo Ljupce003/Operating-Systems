@@ -1,0 +1,225 @@
+##################################################################################################################
+
+1.
+
+#Komanda za kreiranje direktorium 
+
+221563@os2:~$ mkdir directory001
+
+#Komanda za promena na raboten direktorium
+
+221563@os2:~$ cd directory001
+
+#Komanda za kreiranje fajl vo raboten direktorium
+
+221563@os2:~/directory001$ touch file123
+
+
+
+2.#Komanda za dokumentacija na cat
+
+221563@os2:~$ man cat
+
+
+
+3.
+
+#Komanda za promena na permisiite kaj user i user group za da mu ovozmozi read i write privilegii,so karakteri
+
+221563@os2:~/directory001$ chmod ug+rw file123
+
+4.
+
+#Komanda za promena na permisiite kaj user i user group za da mu ovozmozi read i write privilegii,ama so octalni brojcinja
+
+221563@os2:~/directory001$ chmod 660 file123
+
+5.
+
+#Komanda za prikazuvanje koj e tekovno najaven vo sistemot
+
+221563@os2:~$ users
+
+6.
+
+#Komandi koja prvo se kreira direktorium directory002 pa potoa vo nego se kopira fajlot i se preimenuva
+
+221563@os2:~/directory001$ mkdir directory002 | cp file123 directory002/file234
+
+
+
+7.
+
+#Komanda koja rekurzivno ke gi izbrise site datoteki vo direktoriumot
+
+221563@os2:~$ rm -r directory001
+
+
+
+##################################################################################################################
+
+1.
+
+#Komandi za kreiranje na nov direkorium,pa vleguvanje vo nego i kreiranje dve novi tekst datoteki
+
+221563@os2:~$ mkdir results 
+
+221563@os2:~$ cd results
+
+221563@os2:~/results$ touch OS1.txt | touch OS2.txt
+
+
+
+2.
+
+#Komandi kade so text editor gi dodadiv podatocite prevzemeni od linkovite
+
+221563@os2:~/results$ nano OS1.txt
+
+221563@os2:~/results$ nano OS2.txt
+
+
+
+3.
+
+#Komandi za prikazuvanje na sodrzina od fajl
+
+221563@os2:~/results$ cat OS1.txt
+
+221563@os2:~/results$ cat OS2.txt
+
+221563@os2:~/results$ cat OS1.txt  OS2.txt
+
+
+
+4.
+
+#Komanda koja pravi koncatenacija od dvete datoteki i gi sacuva vo total.txt
+
+221563@os2:~/results$ cat OS1.txt  OS2.txt > total.txt
+
+
+
+5.
+
+#Komandi koi se kreira direktorium i se premestuva datotekata vo noviot direktorium
+
+221563@os2:~/results$ mkdir results_2023 | mv total.txt results_2023/
+
+
+
+6.
+
+221563@os2:~/results/results_2023$ wc total.txt    #Komanda koj prikazuva broj na redovi,zborovi,znaci vo fajlot
+
+  98  490 4554 total.txt
+
+221563@os2:~/results/results_2023$ wc -l total.txt   #Komanda koj prikazuva broj na redovi vo fajlot
+
+98 total.txt
+
+221563@os2:~/results/results_2023$ wc -w total.txt  #Komanda koj prikazuva broj na zborovi vo fajlot
+
+490 total.txt
+
+221563@os2:~/results/results_2023$ wc -c total.txt  #Komanda koj prikazuva broj na znaci vo fajlot
+
+4554 total.txt
+
+
+
+7.
+
+#grep komanda koja gi printa site redovi kade sto indeksot zapocnuva so 23-znaci deka se zapisale na faukltetot vo 2023 godina
+
+221563@os2:~/results/results_2023$ grep "^23[0-9][0-9][0-9][0-9]" total.txt
+
+#Istata funkcionalnost no so sed
+
+221563@os2:~/results/results_2023$ sed -n '/^23[0-9][0-9][0-9][0-9]/p' total.txt
+
+#Istoto no so awk
+
+221563@os2:~/results/results_2023$ awk '/^23[0-9]*/ {print $0}' total.txt
+
+
+
+8.
+
+#Komandata awk koja ke filtrira studentite sto zapocnale so studiranje vo 2021 i imat status submitted , i ke mu se isprinta nivniot indeks,datum,vreme
+
+221563@os2:~/results/results_2023$ awk '/^21[0-9]*/ {if ( $5 == "submitted" ){print $1,$2,$3}}' total.txt
+
+
+
+9.
+
+#Komanda awk koja ke broi kolku studenti submitnale od grupa A za pomalku od 30 minuti
+
+221563@os2:~/results/results_2023$ awk 'BEGIN{count=0} {if( $5 == "submitted" && $4 == "groupA" ){if( $3 ~ /[0-2][0-9]:[0-5][0-9]/){count++;}}} END{print "Ima vkupno ",count}' total.txt
+
+
+##################################################################################################################
+
+
+
+#!/bin/bash
+
+
+
+if [ -z "$1" ]
+
+then
+
+        echo "Insert name of file!"
+
+        exit 1
+
+elif [ ! -z "$2" ]
+
+then
+
+        echo "Too many input arguments!"
+
+        exit 1
+
+fi
+
+file="$1"
+
+if [ -f "$file" ]
+
+then
+
+        echo "Good for File"
+
+else
+
+        echo "Not a file"
+
+        exit 1
+
+fi
+
+
+
+for ime in $( ls -l | awk '/^-r--/ {print $10}' )
+
+do
+
+cat "$ime" >> "$file";
+
+echo "" >> "$file"
+
+done
+
+
+
+#Pomosni komandi za da se isprinta i prazne fajlot za da ne se natrupa
+
+#cat "$file"
+
+#> "$file"
+
+
+

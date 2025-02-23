@@ -1,0 +1,5 @@
+FROM eclipse-temurin
+WORKDIR /usr/src/myapp
+COPY ./src/tcp ./tcp
+RUN javac tcp/*.java
+CMD ["java", "tcp.TCP_Client"]

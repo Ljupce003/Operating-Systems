@@ -1,0 +1,25 @@
+ls -листирај ги фајловите во датотека -a (сите),  -al (сите + скриените), -n (сите + инфо за нив)
+cat -испринтај на екран содржината на фајлот  (> overwrite na drug fajl),  (>> append na фајлот)
+cp- copy - копирај фајл на друга дестинација
+mv- move - премести фајл на друга дестинација и ренаме
+cd- промени работен директориум  
+dir- прикажи содржина на работен директориум
+pwd- прикажи точна локација каде се наоѓаме
+rm- remove - избриши фајл 
+wc-  изброј редови/зборови/карактери во документ    -l(брои редови) -w(брои зборови) -c(брои карактери)
+mkdir - make folder - креира нов фолдер
+grep - наједноставна и принта редови каде има совпаѓање
+sed-може да бара но мозе и реплајс да праве
+awk најмоќна за селекција,оди и по колони,како цел прог јазик
+chmod - dodadi,odzemi read,write,execute permisii
+ps - lista momentalni aktivni procesi
+netstat - info za mrezata,interfejsite
+man - manual za site komandi
+
+./ - za execute na bash skripta
+
+#!/bin/bash  - za pred pocetok na sekoja bash skripta
+echo - ista kako println   -n za print bez newline
+
+
+

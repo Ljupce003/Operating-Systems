@@ -1,0 +1,55 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    container_name: bank-server
+
+    networks:
+      - private-server-banker-net
+      - private-server-client-net
+
+    environment:
+     - SERVER_PORT=3000
+     - BANKER_NAME=banker
+     - BANKER_PORT=3010
+  banker:
+    build:
+      context: .
+      dockerfile: Dockerfile-banker
+    container_name: the-banker
+    networks:
+      - private-server-banker-net
+
+    volumes:
+      - ./src/data:/usr/src/myapp/data
+
+    environment:
+      - BANKER_PORT=3010
+      - LEDGER_FILEPATH=./data/ledger.txt
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+
+    networks:
+      - private-server-client-net
+
+    environment:
+      - SERVER_PORT=3000
+      - SERVER_NAME=server
+
+    depends_on:
+      - server
+      - banker
+
+    deploy:
+      replicas: 15
+
+
+networks:
+  private-server-banker-net:
+    driver: bridge
+  private-server-client-net:
+    driver: bridge

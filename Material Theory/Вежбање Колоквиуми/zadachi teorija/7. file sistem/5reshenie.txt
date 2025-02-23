@@ -1,0 +1,14 @@
+1 pristap - sodrzina na indeksen jazel na '/'
+2 pristap - sodrzina na indeksen jazel na 'a'
+3 pristap - soodveten blok od prvo indirektno nivo 
+4 pristap - soodveten blok od vtoro indirektno nivo
+5 pristap - soodveten blok od treto indirektno nivo
+6 pristap - zemanje na realniot, pobaran podatok  ==> vkupno 6 pristapi
+
+100B/2B = 50 (adresi po blok)
+5 -> direct -> 5 bloka (0 + 5 = 5)
+1 edinecen -> 50 bloka (5 + 50 = 55)
+1 dvoen -> 50^2 = 2500 blok ( 55 + 2500 = 2555 )
+1 troen -> 50^3 = 125 000 bloka ( 2555 + 125 000 =  127 555 )
+
+ ==> Sleduva, blokot so reden broj 127_000 e dostapen preku trojniot indirekten pokazuvac.

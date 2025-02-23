@@ -1,0 +1,52 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile-server
+    container_name: Server-container
+    ports:
+      - "1500:1500"
+    environment:
+      - SERVER_PORT=1500
+      - SERVERLOGGER_NAME=logger
+      - SERVERLOGGER_PORT=1550
+    networks:
+      - server-client-private-net
+      - server-logger-private-net
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile-client
+    #container_name: Client-container
+    environment:
+      - SERVER_NAME=server
+      - SERVER_PORT=1500
+    networks:
+      - server-client-private-net
+    deploy:
+      replicas: 150
+
+    depends_on:
+      - server
+      - logger
+  logger:
+    build:
+      context: .
+      dockerfile: Dockerfile-logger
+    container_name: Server-logger-container
+    volumes:
+      - ./src/data:/usr/src/myapp/data
+    environment:
+      - LOGGER_PORT=1550
+      - CSV_FILE_PATH=./data/logs.txt
+      - COUNTER_FILE_PATH=./data/counter.bin
+    networks:
+      - server-logger-private-net
+
+
+networks:
+  server-client-private-net:
+    driver: bridge
+  server-logger-private-net:
+    driver: bridge
